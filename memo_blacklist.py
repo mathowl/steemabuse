@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from beem.account import Account
 from beem.amount import Amount
+from beem.nodelist import NodeList
 
 
 
@@ -12,8 +13,11 @@ def memos_blacklist(user_c,m_days):
     :param int m_days: number of days 
     :rtype: list str with memos containing blacklist
     """
-
-    acc = Account(user_c)
+    nodes = NodeList().get_nodes()
+    stm = Steem(node=nodes)
+    set_shared_steem_instance(stm)
+    acc = Account(user_c,steem_instance=stm)
+    
     stop_time = datetime.now()
     start_time = stop_time - timedelta(m_days)
     blist = []
